@@ -178,6 +178,12 @@ enum dsi_special_panel {
 	DSI_SPECIAL_PANEL_HUAXING,
 };
 
+enum dsi_special_panel {
+	DSI_SPECIAL_PANEL_NONE,
+	DSI_SPECIAL_PANEL_TIANMA,
+	DSI_SPECIAL_PANEL_HUAXING,
+};
+
 struct dsi_panel {
 	const char *name;
 	enum dsi_special_panel special_panel;
