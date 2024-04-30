@@ -221,7 +221,7 @@ static int ip_finish_output2(struct net *net, struct sock *sk, struct sk_buff *s
 	if (lwtunnel_xmit_redirect(dst->lwtstate)) {
 		int res = lwtunnel_xmit(skb);
 
-		if (res < 0 || res == LWTUNNEL_XMIT_DONE)
+		if (res != LWTUNNEL_XMIT_CONTINUE)
 			return res;
 	}
 
@@ -1122,6 +1122,16 @@ static int ip_setup_cork(struct sock *sk, struct inet_cork *cork,
 	struct ip_options_rcu *opt;
 	struct rtable *rt;
 
+	rt = *rtp;
+	if (unlikely(!rt))
+		return -EFAULT;
+
+	cork->fragsize = ip_sk_use_pmtu(sk) ?
+			 dst_mtu(&rt->dst) : READ_ONCE(rt->dst.dev->mtu);
+
+	if (!inetdev_valid_mtu(cork->fragsize))
+		return -ENETUNREACH;
+
 	/*
 	 * setup for corking.
 	 */
@@ -1137,15 +1147,6 @@ static int ip_setup_cork(struct sock *sk, struct inet_cork *cork,
 		cork->flags |= IPCORK_OPT;
 		cork->addr = ipc->addr;
 	}
-	rt = *rtp;
-	if (unlikely(!rt))
-		return -EFAULT;
-
-	cork->fragsize = ip_sk_use_pmtu(sk) ?
-			 dst_mtu(&rt->dst) : READ_ONCE(rt->dst.dev->mtu);
-
-	if (!inetdev_valid_mtu(cork->fragsize))
-		return -ENETUNREACH;
 
 	cork->gso_size = sk->sk_type == SOCK_DGRAM &&
 			 sk->sk_protocol == IPPROTO_UDP ? ipc->gso_size : 0;
