@@ -1,0 +1,47 @@
+name: Unzip Files and Upload Artifacts
+
+on:
+  workflow_dispatch:
+
+jobs:
+  unzip:
+    name: Unzip Files
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Install unzip
+      run: |
+        sudo apt update
+        sudo apt install unzip
+
+    - name: List files in repo
+      run: |
+        ls -lh
+
+    - name: Unzip KernelSU-main.zip
+      run: |
+        unzip KernelSU-main.zip -d KernelSU || { echo "Failed to unzip KernelSU-main.zip"; exit 1; }
+
+    - name: Unzip AnyKernel3-master.zip
+      run: |
+        unzip AnyKernel3-master.zip -d AnyKernel3 || { echo "Failed to unzip AnyKernel3-master.zip"; exit 1; }
+
+    - name: List extracted files
+      run: |
+        ls -lh KernelSU
+        ls -lh AnyKernel3
+
+    - name: Upload KernelSU extracted files
+      uses: actions/upload-artifact@v4
+      with:
+        name: KernelSU-extracted
+        path: KernelSU/
+
+    - name: Upload AnyKernel3 extracted files
+      uses: actions/upload-artifact@v4
+      with:
+        name: AnyKernel3-extracted
+        path: AnyKernel3/
