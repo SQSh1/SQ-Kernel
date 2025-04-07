@@ -12,8 +12,7 @@ jobs:
         run: sudo apt install -y unzip
 
       - name: Download KernelSU-main.zip
-        run: |
-          curl -L -o KernelSU-main.zip https://github.com/KernelSU/KernelSU/archive/refs/heads/main.zip
+        run: curl -L -o KernelSU-main.zip https://github.com/KernelSU/KernelSU/archive/refs/heads/main.zip
 
       - name: Unzip KernelSU-main.zip
         run: unzip KernelSU-main.zip
