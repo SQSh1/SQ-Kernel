@@ -45,3 +45,8 @@ jobs:
       with:
         name: AnyKernel3-extracted
         path: AnyKernel3/
+   - name: List extracted files
+      run: |
+        ls -lh KernelSU
+        ls -lh KernelSU/KernelSU-main
+        ls -lh AnyKernel3
