@@ -1,0 +1,19 @@
+name: Unzip KernelSU
+
+on:
+  workflow_dispatch:
+
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install unzip
+        run: sudo apt update && sudo apt install -y unzip
+
+      - name: Unzip KernelSU-main.zip
+        run: unzip KernelSU-main.zip -d KernelSU
+        
