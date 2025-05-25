@@ -1,18 +1,49 @@
-Linux kernel
-============
+# Create LICENSE and SQ_README.md files as per Sadegh's request
 
-This file was moved to Documentation/admin-guide/README.rst
+license_text = """\
+This program is free software; you can redistribute it and/or modify
+it under the terms of version 2 of the GNU General Public License
+as published by the Free Software Foundation.
 
-Please notice that there are several guides for kernel developers and users.
-These guides can be rendered in a number of formats, like HTML and PDF.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-In order to build the documentation, use ``make htmldocs`` or
-``make pdfdocs``.
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-There are various text files in the Documentation/ subdirectory,
-several of them using the Restructured Text markup notation.
-See Documentation/00-INDEX for a list of what is contained in each file.
+Full license text can be found at: https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
+"""
 
-Please read the Documentation/process/changes.rst file, as it contains the
-requirements for building and running the kernel, and information about
-the problems which may result by upgrading your kernel.
+sq_readme_text = """\
+# SQ Kernel - Kinesis v29
+
+This is a customized version of the Linux kernel source for personal and educational use.  
+Imported and maintained by [SQ (Sadegh Shabani)](https://github.com/SQSh1).
+
+## Notes
+
+- This kernel is based on the official Linux kernel tree.
+- No structural or upstream files were modified, to preserve integrity.
+- All custom configurations, if any, are maintained in separate branches or documentation.
+
+## License
+
+This repository follows the original license of the Linux kernel:  
+**GNU General Public License v2.0 (GPL-2.0)**
+
+For more details, see the `LICENSE` file or visit [gnu.org/licenses/gpl-2.0](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
+"""
+
+license_path = "/mnt/data/LICENSE.txt"
+sq_readme_path = "/mnt/data/SQ_README.md"
+
+with open(license_path, "w") as f:
+    f.write(license_text)
+
+with open(sq_readme_path, "w") as f:
+    f.write(sq_readme_text)
+
+license_path, sq_readme_path
